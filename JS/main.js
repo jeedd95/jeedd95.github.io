@@ -18,9 +18,11 @@ function Login() {
 
 function Signin() {
   console.log("회원가입 클릭");
+  window.location.assign('auth.html');
 }
 
 getTime();
 setInterval(getTime, 1000);
 loginBtn.addEventListener("click", Login);
 signinBtn.addEventListener("click",Signin);
+//console.log(document.writeln(location.href));
