@@ -9,20 +9,20 @@
 </head>
 
 <body>
-    <form>
+    <form id="signInForm">
         이메일 :<br>
-        <input id="emailInput" type="email" name="email" maxlength="20">
+        <input type="email" maxlength="20" class="emailInput">
         <button>중복 확인</button><br>
         비밀번호:<br>
-        <input type="password" name="password" maxlength="20"><br>
+        <input type="password" maxlength="20" class="passwordInput"><br>
         비밀번호 확인:<br>
-        <input type="password" name="password_2" maxlength="20">
+        <input type="password" maxlength="20" class="passwordInput">
         <br>
         <br>
-        <button>가입</button>
-        
-        <script src="/JS/signIn.js"></script>
-      </form>
-</body>
+        <button class="signInButton">가입</button>
+    </form>
 
+    <script src="/JS/signIn.js"></script>
+    <script type="module" src="/JS/Firebase/config.js"></script>
+</body>
 </html>
