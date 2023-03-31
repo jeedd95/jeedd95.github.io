@@ -1,17 +1,25 @@
-const signInForm = document.querySelector("#signInForm");
-const emailInput = document.querySelector("input#bbb");
-const passwordInput = document.querySelectorAll("#signInForm .passwordInput");
-const signInButton = document.querySelector("#signInForm .signInButton");
-const clock = document.querySelector("h2#clock");
+import { CreateAccount } from "./Firebase/config.js";
 
-function SignIn(event){
+const signInForm = document.querySelector("#signInForm");
+
+const inputs = signInForm.getElementsByTagName("input");
+const emailInput = inputs[0];
+const passwordInput = inputs[1];
+const passwordCheckInput = inputs[2];
+const buttons = signInForm.getElementsByTagName("button");
+const checkDuplicateButton = buttons[0];
+const signInButton = buttons[1];
+
+function SignIn(event) {
     event.preventDefault();
-    console.log("가입버튼 클릭");
-    console.log(clock.innerHTML);
-    console.log(emailInput);
-    // console.log(emailInput);
-    // console.log(emailInput.innerText);
-    //console.log(passwordInput.innerText);
+    CreateAccount(emailInput.value, passwordInput.value,
+        (success) => {
+            console.log("회원가입 성공");
+        },
+        (error) => {
+            console.log("회원가입 실패");
+        })
 }
 
-signInButton.addEventListener("click",SignIn);
+
+signInButton.addEventListener("click", SignIn);

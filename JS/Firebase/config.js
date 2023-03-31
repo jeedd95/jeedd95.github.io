@@ -1,10 +1,9 @@
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "../../node_modules/firebase/firebase-app.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
- import { getAnalytics } from "../../node_modules/firebase/firebase-analytics.js";
- import { getAuth} from "../../node_modules/firebase/firebase-auth.js";
- import { getFirestore } from "../../node_modules/firebase/firebase-firestore.js";
-
+import { getAuth, createUserWithEmailAndPassword } from "../../node_modules/firebase/firebase-auth.js";
+//import { getAnalytics } from "../../node_modules/firebase/firebase-analytics.js";
+//import { getFirestore } from "../../node_modules/firebase/firebase-firestore.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,18 +22,24 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 //const db = getFirestore(app);
 //const analytics = getAnalytics(app);
-const auth = getAuth(app);
 
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed in
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // ..
-//   });
+/** 회원가입 */
+export function CreateAccount(email, password, Success,Error) {
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+      Success(user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+      Error(errorCode);
+    })
+}
