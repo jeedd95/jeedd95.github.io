@@ -1,4 +1,5 @@
 import { AddDocData, CreateAccount, FindDocData } from "./Firebase/config.js";
+import VerEx from 'verbal-expressions';
 
 const signInForm = document.querySelector("#signInForm");
 
@@ -11,7 +12,7 @@ const buttons = signInForm.getElementsByTagName("button");
 const checkDuplicateButton = buttons[0];
 const signInButton = buttons[1];
 const infos = signInForm.getElementsByTagName("label");
-const passwordInfo=infos[0];
+const passwordInfo = infos[0];
 
 let isCompletePassword;
 
@@ -49,18 +50,29 @@ function CheckDuplicateDB(event) {
 }
 
 /** 비밀번호 일치 확인 */
-function PasswordInput(){
-    if(passwordInput.value !== passwordCheckInput.value){
-        passwordInfo.innerText ="비밀번호가 일치 하지않습니다.";
-        isCompletePassword=false;
+function PasswordInput() {
+    if (passwordInput.value !== passwordCheckInput.value) {
+        passwordInfo.innerText = "비밀번호가 일치 하지않습니다.";
+        isCompletePassword = false;
     }
-    else{
-        passwordInfo.innerText="";
-        isCompletePassword=true;
+    else {
+        passwordInfo.innerText = "";
+        isCompletePassword = true;
     }
+}
+/** 이메일 정규식 생성 */
+function GenerateRegex(email) {
+    const emailRegex = VerEx()
+        .startOfLine()
+        .something()
+        .maybe('@')
+        .endOfLine()
+
+    return emailRegex.test(email);
 }
 
 checkDuplicateButton.addEventListener("click", CheckDuplicateDB);
 signInButton.addEventListener("click", SignIn);
-passwordInput.addEventListener("input",PasswordInput);
-passwordCheckInput.addEventListener("input",PasswordInput);
+passwordInput.addEventListener("input", PasswordInput);
+passwordCheckInput.addEventListener("input", PasswordInput);
+GenerateRegex("ads@naver.com");
