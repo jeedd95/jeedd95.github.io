@@ -7,6 +7,7 @@ import {
   updateProfile
 } from "../../node_modules/firebase/firebase-auth.js";
 import { doc, setDoc, getDocs, getFirestore, collection, query, where, addDoc } from "../../node_modules/firebase/firebase-firestore.js";
+
 //import { getAnalytics } from "../../node_modules/firebase/firebase-analytics.js";
 
 // TODO: Add SDKs for Firebase products that you want to use

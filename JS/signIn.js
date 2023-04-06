@@ -1,5 +1,5 @@
 import { AddDocData, CreateAccount, FindDocData } from "./Firebase/config.js";
-import VerEx from 'verbal-expressions';
+import VerEx from '../node_modules/verbal-expressions/VerbalExpressions.js';
 
 const signInForm = document.querySelector("#signInForm");
 
@@ -75,4 +75,4 @@ checkDuplicateButton.addEventListener("click", CheckDuplicateDB);
 signInButton.addEventListener("click", SignIn);
 passwordInput.addEventListener("input", PasswordInput);
 passwordCheckInput.addEventListener("input", PasswordInput);
-GenerateRegex("ads@naver.com");
+console.log(GenerateRegex("ads@naver.com"));
