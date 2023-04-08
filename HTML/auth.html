@@ -6,18 +6,20 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>회원 가입</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../CSS/main.css">
 </head>
 
 <body>
     <form id="signInForm">
         이메일 :<br>
-        <input type="email" maxlength="20" class="emailInput">
-        <button>중복 확인</button><br>
+        <input type="email" maxlength="20" class="emailInput"><br>
+        <label class="black"></label>
+        <button class="hidden">중복 확인</button><br>
         비밀번호:<br>
         <input type="password" maxlength="20" class="passwordInput"><br>
         비밀번호 확인:<br>
         <input type="password" maxlength="20" class="passwordInput"><br>
-        <label></label><br>
+        <label class="black"></label><br>
         닉네임:<br>
         <input maxlength="8" class="NickNameInput">
         <br>
@@ -30,6 +32,7 @@
     <!-- <script type="module" src="/node_modules/firebase/firebase-auth.js"></script> -->
     <!-- <script type="module" src="/node_modules/firebase/firebase-firestore.js"></script> -->
     <script type="module" src="/JS/Firebase/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min.js"></script>
     <script type="module" src="/JS/signIn.js"></script>
 </body>
 </html>

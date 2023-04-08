@@ -42,3 +42,15 @@
     /* border-radius: 1rem; */
     /* background: #ff6e6c; */
   }
+
+  .normal{
+    color : black;
+  }
+  
+  .correct{
+    color: green;
+  }
+  
+  .wrong{
+    color : red;
+  }
