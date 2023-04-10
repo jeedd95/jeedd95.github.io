@@ -32,7 +32,8 @@ function SignIn(event) {
     }
     CreateAccount(myData,
         (user) => {
-            AddDocData(myData, user.uid);
+            AddDocData(myData, user.uid,()=>{window.location.assign('index.html');
+        });
             alert(`[${myData.nickName}] 회원 가입 성공`);
         },
         (errorCode) => {

@@ -1,6 +1,13 @@
+import { SignIn,LogOut } from "./Firebase/config.js";
+
 const clock = document.querySelector('#clock');
 const loginBtn = document.querySelector('#Login');
 const signinBtn = document.querySelector('#Signin');
+const LogOutBtn = document.querySelector('#Logout');
+const emailInput = document.querySelector('#emailInput');
+const passwordInput = document.querySelector('#passwordInput');
+const signOutBtn = document.querySelector('#Signout');
+
 
 
 function getTime() {
@@ -14,6 +21,13 @@ function getTime() {
 
 function Login() {
   console.log("로그인 버튼 클릭");
+  SignIn(emailInput.value,passwordInput.value,(Success)=>{
+    alert("로그인에 성공하셨습니다!");
+  window.location.assign('menu.html');
+  },
+  (Error)=>{
+    alert(`로그인에 실패하셨습니다!\n${Error}`);
+  });
 }
 
 function Signin() {
@@ -21,8 +35,14 @@ function Signin() {
   window.location.assign('auth.html');
 }
 
+function SignOut(){
+  console.log("회원탈퇴 클릭");;
+}
+
 getTime();
 setInterval(getTime, 1000);
 loginBtn.addEventListener("click", Login);
 signinBtn.addEventListener("click",Signin);
+LogOutBtn.addEventListener("click",LogOut);
+signOutBtn.addEventListener("click",SignOut);
 //console.log(document.writeln(location.href));

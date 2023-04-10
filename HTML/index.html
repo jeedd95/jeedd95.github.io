@@ -10,13 +10,22 @@
 </head>
 
 <body>
-    <div class="wrapper" >
+    <div class="wrapper">
         <div id="clock" class="content">00:00:00</div>
-        <input id="Signin" type="submit" value="회원가입" />
-        <input id="Login" type="submit" value="로그인" />
     </div>
-    
-    <script src="/JS/main.js"></script>
+    <div>
+        <input id="emailInput" placeholder="Email"/>
+        <br>
+        <input id="passwordInput" type="password" placeholder="Password"/>
+        <br>
+        <input id="Login" type="submit" value="로그인"/>
+        <input id="Logout" type="submit" value="로그아웃" />
+        <input id="Signin" type="submit" value="회원가입" />
+        <input id="Signout" type="submit" value="회원탈퇴" />
+
+    </div>
+    <script type="module" src="/JS/main.js"></script>
+    <script type="module" src="/JS/Firebase/config.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
 import { doc, setDoc, getDocs, getFirestore, collection, query, where, addDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -62,13 +62,13 @@ export function SignIn(email, password, Success, Error) {
     });
 }
 
-/** 
- * FireStore 데이터 저장
+/** FireStore 데이터 저장
  * @param {object} myData 내 데이터
  * @param {string} uid Auth에서 생성되는 uid
  */
-export async function AddDocData(myData, uid) {
-   await setDoc(doc(db, DocRef.USERS, uid), myData);
+export async function AddDocData(myData, uid,callback) {
+  await setDoc(doc(db, DocRef.USERS, uid), myData)
+  .then(()=>{callback();});
 
   // try {
   //   const docRef = await addDoc(collection(db, DocRef.USERS),myData);
@@ -78,8 +78,7 @@ export async function AddDocData(myData, uid) {
   // }
 }
 
-/**
- * FireStroe 데이터 검색
+/** FireStroe 데이터 검색
  * @param {string} ref 찾을 필드
  * @param {*} input 검색 데이터
  */
@@ -99,4 +98,35 @@ export async function FindDocData(ref, input, callback) {
     callback(false);
   }
 }
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("로그인 된 상태");
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    console.log(uid);
+    // ...
+  } else {
+    console.log("로그인 안된 상태");
+
+    // User is signed out
+    // ...
+  }
+});
+
+/** 로그아웃
+ */
+export function LogOut() {
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    console.log("로그아웃 성공");
+    location.reload();
+  }).catch((error) => {
+    // An error happened.
+    console.log("로그아웃 실패");
+  });
+}
+
+
 
