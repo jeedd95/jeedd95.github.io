@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
-import { doc, setDoc, getDocs, getFirestore, collection, query, where, addDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut, deleteUser, reauthenticateWithCredential,EmailAuthProvider} from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+import { doc, setDoc, getDocs, getFirestore, collection, query, where, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,6 +26,8 @@ const DocRef = Object.freeze({
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const user = auth.currentUser;
+
 // const analytics = getAnalytics(app);
 
 /** 회원가입 */
@@ -128,5 +130,19 @@ export function LogOut() {
   });
 }
 
+/** Auth 회원탈퇴 */
+export function SignOut(Success,Error){
+  deleteUser(auth.currentUser).then(() => {
+    // User deleted.
+    Success(auth.currentUser);
+  }).catch((error) => {
+    // An error ocurred
+    // ...
+    Error(error)
+  });
+}
 
-
+/** DB삭제 */
+export async function DeleteDB(uid) {
+  await deleteDoc(doc(db, DocRef.USERS, uid));
+}
