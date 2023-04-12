@@ -26,7 +26,8 @@ const DocRef = Object.freeze({
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-let currentUser;
+export let currentUser;
+export let myData;
 
 // const analytics = getAnalytics(app);
 
@@ -54,8 +55,15 @@ export function SignIn(email, password, Success, Error) {
       // Signed in
       const user = userCredential.user;
       // ...
-      Success(user);
 
+      FindDocData("email", email, (result) => {
+        myData = new Object();
+        myData.email = result.email;
+        myData.password = result.password;
+        myData.nickname = result.nickname
+      });
+      
+      Success(user);
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -92,32 +100,35 @@ export async function FindDocData(ref, input, callback) {
   if (querySnapshot.size > 0) {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      //console.log(doc.id, " => ", doc.data());
+      callback(doc.data());
     });
-    callback(true);
   }
   else {
     callback(false);
   }
 }
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("로그인 된 상태");
-    currentUser = user;
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    //const uid = user.uid;
-    //console.log(uid);
-    // ...
-  } else {
-    console.log("로그인 안된 상태");
-    currentUser=null;
+/** 로그인 상태 확인 */
+export function AuthStateCheck() {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("로그인 된 상태");
+      currentUser = user;
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      //const uid = user.uid;
+      //console.log(currentUser.uid);
+      // ...
+    } else {
+      console.log("로그인 안된 상태");
+      currentUser = null;
 
-    // User is signed out
-    // ...
-  }
-});
+      // User is signed out
+      // ...
+    }
+  });
+}
 
 /** 로그아웃
  */
@@ -157,3 +168,5 @@ export function SignOut(Success,Error){
 async function DeleteDB(uid) {
   await deleteDoc(doc(db, DocRef.USERS, uid));
 }
+
+AuthStateCheck();
