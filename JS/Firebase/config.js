@@ -26,7 +26,7 @@ const DocRef = Object.freeze({
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const user = auth.currentUser;
+let currentUser;
 
 // const analytics = getAnalytics(app);
 
@@ -104,13 +104,15 @@ export async function FindDocData(ref, input, callback) {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("로그인 된 상태");
+    currentUser = user;
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
-    const uid = user.uid;
-    console.log(uid);
+    //const uid = user.uid;
+    //console.log(uid);
     // ...
   } else {
     console.log("로그인 안된 상태");
+    currentUser=null;
 
     // User is signed out
     // ...
@@ -132,9 +134,18 @@ export function LogOut() {
 
 /** Auth 회원탈퇴 */
 export function SignOut(Success,Error){
-  deleteUser(auth.currentUser).then(() => {
+  //const user = auth.currentUser;
+  try {
+    DeleteDB(currentUser.uid);
+  } catch (error) {
+    console.log(error);
+    console.log(`currentUser가 null입니다.`);
+  }
+
+  //Auth삭제
+  deleteUser(currentUser).then(() => {
     // User deleted.
-    Success(auth.currentUser);
+    Success(currentUser);
   }).catch((error) => {
     // An error ocurred
     // ...
@@ -143,6 +154,6 @@ export function SignOut(Success,Error){
 }
 
 /** DB삭제 */
-export async function DeleteDB(uid) {
+async function DeleteDB(uid) {
   await deleteDoc(doc(db, DocRef.USERS, uid));
 }

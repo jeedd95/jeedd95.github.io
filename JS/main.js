@@ -1,4 +1,4 @@
-import { SignIn, LogOut, SignOut, DeleteDB } from "./Firebase/config.js";
+import { SignIn, LogOut, SignOut } from "./Firebase/config.js";
 
 const clock = document.querySelector('#clock');
 const loginBtn = document.querySelector('#Login');
@@ -39,12 +39,12 @@ function _SignOut() {
   console.log("회원탈퇴 클릭");
   SignOut((user) => {
     //DB삭제
-    DeleteDB(user.uid);
-    alert(user);
-    console.log(user);
+    //DeleteDB(user.uid);
+    alert(`탈퇴 되었습니다!`);
+    //console.log(user);
   }, (Error) => {
-    alert(Error);
-    console.log(Error);
+    alert(`탈퇴 실패...`);
+    //console.log(Error);
   });
 
   
